@@ -1,2 +1,17 @@
 server:
   port: 8015
+
+# h2 database를 사용하기 위함
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  datasource:
+    url: jdbc:h2:./db_dev;MODE=MySQL
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto=update:

@@ -30,6 +30,10 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	//H2 데이터베이스 설치하기
+	runtimeOnly 'com.h2database:h2'
+	implementation 'org.springframework.boot:spring-boost-starter-data-jpa'
 }
 
 tasks.named('test') {
