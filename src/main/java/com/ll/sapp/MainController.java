@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MainController {
     @GetMapping("/sbb")
     @ResponseBody
-    public String index(){
+    public String index() {
         return "안녕";
     }
 }
