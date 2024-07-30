@@ -16,6 +16,7 @@ spring:
     hibernate:
       ddl-auto: update
     properties:
+      # 어떤 sql문이 실행되는지 볼 수 있다.
       hibernate:
         format_sql: true
         show_sql: true
