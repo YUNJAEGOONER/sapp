@@ -34,6 +34,14 @@ dependencies {
     //H2 데이터베이스 설치하기
     runtimeOnly 'com.h2database:h2'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    //템플릿 설정
+    //템플릿 - 자바 코드를 삽입할 수 있는 HTML 형식의 파일
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+
+    //Spring Boot Validation 라이브러리 설치
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 }
 
 tasks.named('test') {

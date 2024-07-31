@@ -1,0 +1,40 @@
+<!-- 템플릿에 스타일(css) 적용하기 -->
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+    <!--질문-->
+    <h2 class="border-bottom py-2" th:text="${detailed_question.subject}"></h2>
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;" th:text="${detailed_question.content}"></div>
+            <div class="d-flex justify-content-end">
+                <div class="badge bg-light text-dark p-2 text-start">
+                    <div th:text="${#temporals.format(detailed_question.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--답변의 갯수 표시-->
+    <h5 class="border-bottom my-3 py-2"
+        th:text="|${#lists.size(detailed_question.answerList)}개의 답변이 있습니다.|"></h5>
+
+    <!--답변 반복 시작<-->
+    <div class="card my-3" th:each="answer_element : ${detailed_question.answerList}">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;"
+                     th:text="${answer_element.content}"></div>
+            <div class="d-flex justify-content-end">
+                <div class="badge bg-light text-dark p-2 text-start">
+                    <div th:text="${#temporals.format(answer_element.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form th:action="@{|/answer/create/${detailed_question.id}|}" th:object="${answerForm}" method="post" class="my-3">
+        <div th:replace="~{form_errors :: formErrorsFragment}"></div>
+        <textarea name = "content" id="*{content}" rows="10" class="form-control"></textarea>
+        <!-- 답변등록을 누르는 경우 action의 주소로 이동-->
+        <input type="submit" value="답변등록" class="btn btn-primary my-2">
+    </form>
+</div>
+</html>

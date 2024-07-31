@@ -1,0 +1,26 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성일시</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="question_element, loop : ${question_List}">
+                <td th:text="${loop.count}"></td>
+                <td>
+                    <!-- text를 click하면 해당 링크로 이동 -->
+                    <a th:href="@{|/question/detail/${question_element.id}|}"
+                    th:text="${question_element.subject}"></a>
+                </td>
+                <td th:text="${#temporals.format(question_element.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- 질문 등록 버튼 생성 -->
+    <a th:href="@{/question/create}" class="btn btn-primary">질문등록하기</a>
+</div>
+</html>
