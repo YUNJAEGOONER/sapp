@@ -4,9 +4,11 @@ import com.ll.sapp.answer.Answer;
 import com.ll.sapp.answer.AnswerRepository;
 import com.ll.sapp.question.Question;
 import com.ll.sapp.question.QuestionRepository;
+import com.ll.sapp.question.QuestionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -23,10 +25,14 @@ class SappApplicationTests {
     private QuestionRepository questionRepository;
 
     @Autowired
+    private QuestionService questionService;
+
+    @Autowired
     private AnswerRepository answerRepository;
 
     //명시적으로 transaction을 활성화
     @Transactional
+    @Rollback(false)
     @Test
     void testJpa() {
         //repo_save();
@@ -39,7 +45,8 @@ class SappApplicationTests {
         //delete_question();
         //create_answer();
         //answer_find_by_id();
-        answer_find();
+        //answer_find();
+        create_many_question();
     }
 
     //Question 테이블에 데이터(Question)를 저장하는 코드
@@ -143,6 +150,14 @@ class SappApplicationTests {
         List<Answer> answerList = q.getAnswerList();
         assertEquals(1, answerList.size());
         assertEquals("네 자동으로 생성됩니다.", answerList.get(0).getContent());
+    }
+
+    void create_many_question(){
+        for(int i = 1; i <= 300 ; i++ ){
+            String subject = String.format("테스트 데이터 입니다:[%03d]", i);
+            String content = "내용 무";
+            this.questionService.create(subject, content);
+        }
     }
 
 }

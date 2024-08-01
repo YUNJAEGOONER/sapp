@@ -9,17 +9,51 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="question_element, loop : ${question_List}">
-                <td th:text="${loop.count}"></td>
+            <tr th:each="question_element, loop : ${paging}">
+                <!-- 게시물에 번호를 붙이는 공식 -->
+                <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
                 <td>
                     <!-- text를 click하면 해당 링크로 이동 -->
                     <a th:href="@{|/question/detail/${question_element.id}|}"
                     th:text="${question_element.subject}"></a>
+
+                    <!-- question 옆에 답변의 개수를 표시하기 -->
+                    <!-- span은 display 속성이 inline -->
+                    <span class="text-danger small ms-2"
+                        th:if="${#lists.size(question_element.answerList) > 0}"
+                            th:text="${#lists.size(question_element.answerList)}">
+                    </span>
+
                 </td>
                 <td th:text="${#temporals.format(question_element.createDate, 'yyyy-MM-dd HH:mm')}"></td>
             </tr>
         </tbody>
     </table>
+
+    <!-- 페이징처리 시작 -->
+    <div th:if="${!paging.isEmpty()}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{|?page=${paging.number-1}|}">
+                    <span>이전</span>
+                </a>
+            </li>
+            <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                th:if="${page >= paging.number-5 and page <= paging.number+5}"
+                th:classappend="${page == paging.number} ? 'active'"
+                class="page-item">
+                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+            </li>
+            <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+                <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+                    <span>다음</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- 페이징처리 끝 -->
+
     <!-- 질문 등록 버튼 생성 -->
     <a th:href="@{/question/create}" class="btn btn-primary">질문등록하기</a>
 </div>
