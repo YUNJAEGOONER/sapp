@@ -4,15 +4,16 @@
         <thead class="table-dark">
             <tr>
                 <th>번호</th>
-                <th>제목</th>
+                <th style="width:50%">제목</th>
+                <th>글쓴이</th>
                 <th>작성일시</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="question_element, loop : ${paging}">
+            <tr class="text-center" th:each="question_element, loop : ${paging}">
                 <!-- 게시물에 번호를 붙이는 공식 -->
                 <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
-                <td>
+                <td class="text-start">
                     <!-- text를 click하면 해당 링크로 이동 -->
                     <a th:href="@{|/question/detail/${question_element.id}|}"
                     th:text="${question_element.subject}"></a>
@@ -23,8 +24,10 @@
                         th:if="${#lists.size(question_element.answerList) > 0}"
                             th:text="${#lists.size(question_element.answerList)}">
                     </span>
-
                 </td>
+                <td><span th:if="${question_element.author != null}"
+                                th:text="${question_element.author.username}">
+                </span></td>
                 <td th:text="${#temporals.format(question_element.createDate, 'yyyy-MM-dd HH:mm')}"></td>
             </tr>
         </tbody>

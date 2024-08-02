@@ -1,6 +1,7 @@
 package com.ll.sapp.question;
 
 import com.ll.sapp.DataNotFoundException;
+import com.ll.sapp.user.SiteUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,11 +35,12 @@ public class QuestionService {
     }
     
     //새로운 질문을 생성
-    public void create(String subject, String content){
+    public void create(String subject, String content, SiteUser user){
         Question q = new Question();
         q.setSubject(subject);
         q.setContent(content);
         q.setCreateDate(LocalDateTime.now());
+        q.setAuthor(user);
         this.questionRepository.save(q); //새로운 질문을 저장
     }
 
@@ -49,5 +51,15 @@ public class QuestionService {
         return this.questionRepository.findAll(pageable);
     }
 
+    public void modify(Question question, String subject, String content){
+        question.setSubject(subject);
+        question.setContent(content);
+        question.setModifyDate(LocalDateTime.now());
+        this.questionRepository.save(question);
+    }
+
+    public void delete(Question question){
+        this.questionRepository.delete(question);
+    }
 
 }

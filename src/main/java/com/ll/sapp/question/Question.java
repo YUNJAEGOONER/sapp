@@ -1,6 +1,7 @@
 package com.ll.sapp.question;
 
 import com.ll.sapp.answer.Answer;
+import com.ll.sapp.user.SiteUser;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,4 +28,9 @@ public class Question {
     //java에서만 존재
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Answer> answerList;
+
+    @ManyToOne
+    private SiteUser author;
+
+    private LocalDateTime modifyDate;
 }

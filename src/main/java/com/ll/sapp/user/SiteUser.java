@@ -1,4 +1,4 @@
-package com.ll.sapp.user.SiteUser;
+package com.ll.sapp.user;
 
 import jakarta.persistence.*;
 import lombok.Getter;
